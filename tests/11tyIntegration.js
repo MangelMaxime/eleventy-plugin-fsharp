@@ -31,8 +31,7 @@ test("eleventy-fsharp-literate works", async (t) => {
     t.deepEqual(json[0].content, expected);
 });
 
-
-test("nunjucks filters are supporting from inside the F# file", async (t) => {
+test("nunjucks filters are supported from inside the F# file", async (t) => {
 
     const elev = new Eleventy("./11ty-integration-2/", "./11ty-integration-2/_site/", {
         configPath: "./11ty-integration-2/.eleventy.js"

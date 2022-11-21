@@ -15,21 +15,14 @@ const defaultEleventyRemarkOptions = {
 };
 
 /**
- * Global cache for the nunjucks engine,
- * this avoid to create a new instance of the nunjucks engine for each file
- *
- * @type {object}
- * */
-let nunjucksEngineCache = null;
-
-/**
  *
  * Return the instance of the Nunjucks engine if it exists, otherwise create it and return it.
  *
+ * @param {object} nunjucksEngineCache
  * @param {object} eleventyConfig
  * @returns {object} The Nunjucks engine
  */
-function getNunjucksEngine(eleventyConfig) {
+function getNunjucksEngine(nunjucksEngineCache, eleventyConfig) {
     // Setup the nunjucks used by eleventy, so we can call it ourself to process the content
     // This is need otherwise, shortcodes or filters are not processed correctly
 
@@ -58,11 +51,13 @@ function getNunjucksEngine(eleventyConfig) {
 
 /**
  *
+ * @param {object} nunjucksEngineCache
  * @param {object} eleventyConfig
  * @param {FsharpLiteratePluginOptions} pluginOptions
  * @returns {object}
  */
 function eleventyFsharpLiterate(
+    nunjucksEngineCache,
     eleventyConfig,
     pluginOptions
 ) {
@@ -98,7 +93,7 @@ function eleventyFsharpLiterate(
             debug(`Reading ${inputPath}`);
             const { content } = readFileSync(inputPath);
 
-            const nunjucksEngine = getNunjucksEngine(eleventyConfig);
+            const nunjucksEngine = getNunjucksEngine(nunjucksEngineCache, eleventyConfig);
 
             if (content) {
                 debug(`Converting fsx:\n ${content}`);
@@ -132,12 +127,18 @@ function configFunction(
     eleventyConfig,
     pluginOptions
 ) {
+
+    // Cache for the nunjucks engine,
+    // this avoid to create a new instance of the nunjucks engine for each file
+    let nunjucksEngineCache = null;
+
     // Add support for fsx files
     eleventyConfig.addTemplateFormats("fsx");
+
     // Teach eleventy how to handle fsx files
     eleventyConfig.addExtension(
         "fsx",
-        eleventyFsharpLiterate(eleventyConfig, pluginOptions)
+        eleventyFsharpLiterate(nunjucksEngineCache, eleventyConfig, pluginOptions)
     );
 }
 
