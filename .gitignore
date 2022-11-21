@@ -1,0 +1,4 @@
+node_modules
+.ionide/
+.fake
+demo/_site

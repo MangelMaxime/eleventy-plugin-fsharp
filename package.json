@@ -1,0 +1,28 @@
+{
+  "name": "eleventy-plugin-fsharp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/fsharp-literate.js",
+  "scripts": {
+    "test": "npx ava",
+    "test-watch": "npx ava --watch",
+    "demo": "cd demo && npx @11ty/eleventy",
+    "start": "cd demo && npx @11ty/eleventy --serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "2.0.0-canary.18",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@fec/eleventy-plugin-remark": "^3.1.1",
+    "@types/node": "^18.11.9",
+    "ava": "^5.1.0",
+    "shx": "^0.3.4"
+  },
+  "peerDependencies": {
+    "@11ty/eleventy": "^1.0.0"
+  }
+}
