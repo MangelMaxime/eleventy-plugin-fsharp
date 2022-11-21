@@ -6,22 +6,40 @@ This plugin add support for F# literate files to Eleventy.
 
 An literate F# literate file is a file ending with `.fsx`.
 
-### Front matter
-
-The front matter section is delimited by `(**` and `**)` and is parsed as YAML.
-
-```
+```fs
 (**
 ---
-title: "My title"
-layout: the-layout-name
+layout: standard
+title: Introduction
 ---
 **)
+
+(**
+# First-level heading
+
+Some more documentation using `Markdonw`.
+*)
+
+// This F# code will be included in the output
+let helloWorld() = printfn "Hello world!"
+
+(*** hide ***)
+
+// This F# code will not be included in the output
+let add x y = x + y
 ```
+
+The F# script files is processed as follows:
+
+- It starts with a YAML front matter block delimieted by `(**` and `**)`, which is used to set the metadata for the page.
+- A multi-line comment starting with `(**` and ending with `*)` is considered a Markdown block.
+- A single line comment starting with `(***` and ending with `***)` is considered as a command.
 
 ### Commands
 
-You can use the `(*** hide ***)` command to hide a block of code up the next command `(*** show ***)` or markdown block.
+**`(*** hide ***)`**
+
+Hide the subsequent snippet from the output up to the next command `show` command or markdown block.
 
 ```fs
 (*** hide ***)
@@ -43,18 +61,6 @@ This is a markdown block
 
 // This code is shown
 let d = 4
-```
-
-### Markdown blocks
-
-Markdown blocks are defined by using `(** ... *)`. Anything between these tags is going to be treated as markdown.
-
-```md
-(**
-### This line will be converted to a header
-
-This text is **strong** and this one is in *italic*
-*)
 ```
 
 ## Limitations
