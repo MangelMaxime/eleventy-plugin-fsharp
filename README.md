@@ -17,7 +17,7 @@ title: Introduction
 (**
 # First-level heading
 
-Some more documentation using `Markdonw`.
+Some more documentation using `Markdown`.
 *)
 
 // This F# code will be included in the output
