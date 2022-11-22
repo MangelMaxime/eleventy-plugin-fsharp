@@ -6,8 +6,8 @@ const Eleventy = require("@11ty/eleventy");
 
 test("eleventy-fsharp-literate works", async (t) => {
 
-    const elev = new Eleventy("./11ty-integration-1/", "./11ty-integration-1/_site/", {
-        configPath: "./11ty-integration-1/.eleventy.js"
+    const elev = new Eleventy("./tests/11ty-integration-1/", "./tests/11ty-integration-1/_site/", {
+        configPath: "./tests/11ty-integration-1/.eleventy.js"
     });
 
     const json = await elev.toJSON();
@@ -33,8 +33,8 @@ test("eleventy-fsharp-literate works", async (t) => {
 
 test("nunjucks filters are supported from inside the F# file", async (t) => {
 
-    const elev = new Eleventy("./11ty-integration-2/", "./11ty-integration-2/_site/", {
-        configPath: "./11ty-integration-2/.eleventy.js"
+    const elev = new Eleventy("./tests/11ty-integration-2/", "./tests/11ty-integration-2/_site/", {
+        configPath: "./tests/11ty-integration-2/.eleventy.js"
     });
 
     const json = await elev.toJSON();

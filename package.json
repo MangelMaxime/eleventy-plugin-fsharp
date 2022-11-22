@@ -1,29 +1,33 @@
 {
-  "name": "eleventy-plugin-fsharp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/fsharp-literate.js",
-  "scripts": {
-    "test": "npx ava",
-    "test-watch": "npx ava --watch",
-    "demo": "cd demo && npx @11ty/eleventy",
-    "start": "cd demo && npx @11ty/eleventy --serve"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "gray-matter": "^4.0.3"
-  },
-  "devDependencies": {
-    "@11ty/eleventy": "2.0.0-canary.18",
-    "@fec/eleventy-plugin-remark": "^3.1.1",
-    "@types/node": "^18.11.9",
-    "ava": "^5.1.0",
-    "debug": "^4.3.4",
-    "shx": "^0.3.4"
-  },
-  "peerDependencies": {
-    "@11ty/eleventy": "^1.0.0"
-  }
+    "name": "@mangelmaxime/eleventy-plugin-fsharp",
+    "private": false,
+    "version": "0.1.0",
+    "description": "",
+    "main": "src/fsharp-literate.js",
+    "scripts": {
+        "test": "npx ava",
+        "test-watch": "npx ava --watch",
+        "demo": "cd demo && npx @11ty/eleventy",
+        "start": "cd demo && npx @11ty/eleventy --serve",
+        "release": "pnpm run test && node ./scripts/release-npm.mjs"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "gray-matter": "^4.0.3"
+    },
+    "devDependencies": {
+        "@11ty/eleventy": "2.0.0-canary.18",
+        "@fec/eleventy-plugin-remark": "^3.1.1",
+        "@types/node": "^18.11.9",
+        "ava": "^5.1.0",
+        "chalk": "^5.1.2",
+        "changelog-parser": "^2.8.1",
+        "debug": "^4.3.4",
+        "shx": "^0.3.4"
+    },
+    "peerDependencies": {
+        "@11ty/eleventy": "^1.0.0"
+    }
 }
