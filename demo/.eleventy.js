@@ -1,4 +1,8 @@
 const fsharpPlugin = require("../src/index.js");
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const loadLanguages = require("prismjs/components/");
+
+loadLanguages("fsharp");
 
 /**
  * @typedef {import('@11ty/eleventy/src/UserConfig')} EleventyConfig
@@ -15,6 +19,13 @@ module.exports = function (eleventyConfig) {
             return now.toISOString();
         }
         );
+
+    // Set up the syntax highlighter
+    eleventyConfig.addPlugin(syntaxHighlight, {
+        init: function ({ Prism }) {
+            Prism.languages.fs = Prism.languages.fsharp;
+        }
+    });
 
     eleventyConfig.addPlugin(fsharpPlugin);
 

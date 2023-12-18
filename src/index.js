@@ -4,15 +4,9 @@
 const debug = require("debug")("eleventy-plugin-fsharp-literate");
 const NunjucksLib = require("nunjucks");
 const NunjucksEngine = require("@11ty/eleventy/src/Engines/Nunjucks");
-const eleventyRemarkInternal = require("@fec/eleventy-plugin-remark/src/eleventyRemark");
 const readFileSync = require("./utils/readFileSync");
 const transformFsxToMarkdown = require("./transformFsxToMarkdown")
 const getData = require("./getData");
-
-const defaultEleventyRemarkOptions = {
-    plugins: [],
-    enableRehype: true,
-};
 
 /**
  *
@@ -41,25 +35,34 @@ function getNunjucksEngine(nunjucksEngineCache, eleventyConfig) {
 }
 
 /**
- * @typedef {object} FsharpLiteratePluginOptions
- * @property {object} [eleventyRemarkOptions] Options to pass to the eleventy-remark plugin
- */
-
-/**
  * @typedef {string | undefined | function(object):object} EleventyInputContent
  */
+
+const TemplateRender = require("@11ty/eleventy/src/TemplateRender");
+
+async function compileMarkdown(
+    content,
+    { templateConfig, extensionMap }
+) {
+    let inputDir = templateConfig?.dir?.input;
+
+    let tr = new TemplateRender("md", inputDir, templateConfig);
+    tr.extensionMap = extensionMap;
+    await tr.setEngineOverride("md");
+
+    return tr.getCompiledTemplate(content);
+}
 
 /**
  *
  * @param {object} nunjucksEngineCache
  * @param {object} eleventyConfig
- * @param {FsharpLiteratePluginOptions} pluginOptions
  * @returns {object}
  */
 function eleventyFsharpLiterate(
     nunjucksEngineCache,
     eleventyConfig,
-    pluginOptions
+    extensionMap
 ) {
     /**
      *
@@ -70,14 +73,6 @@ function eleventyFsharpLiterate(
         inputContent,
         inputPath
     ) => {
-        const remarkOptions = Object.assign(
-            {},
-            defaultEleventyRemarkOptions,
-            pluginOptions?.eleventyRemarkOptions
-        );
-
-        const remark = eleventyRemarkInternal(remarkOptions);
-
         /**
          * @param {object} data The data object coming from the data cascade (front-matter, global data, etc.)
          */
@@ -102,9 +97,19 @@ function eleventyFsharpLiterate(
 
                 debug(`Markdown content:\n ${markdownContent}`);
 
-                const markdownText = await remark.render(markdownContent, data);
+                const compileMarkdownFn = await compileMarkdown(markdownContent, {
+                    templateConfig: eleventyConfig,
+                    extensionMap,
+                })
+                const markdownText = await compileMarkdownFn(data);
+
+                // Replace &quot; with " because some markdown renderers escape the quotes
+                // and it breaks the nunjucks compilation
+
+                const fixedMarkdownText = markdownText.replace(/&quot;/g, '"');
+
                 const nunjucksCompileFunc = await nunjucksEngine.compile(
-                    markdownText,
+                    fixedMarkdownText,
                     inputPath
                 );
                 return await nunjucksCompileFunc(data);
@@ -121,16 +126,19 @@ function eleventyFsharpLiterate(
 
 /**
  * @param {object} eleventyConfig
- * @param {FsharpLiteratePluginOptions} pluginOptions
  */
 function configFunction(
-    eleventyConfig,
-    pluginOptions
+    eleventyConfig
 ) {
 
     // Cache for the nunjucks engine,
     // this avoid to create a new instance of the nunjucks engine for each file
     let nunjucksEngineCache = null;
+    let extensionMap;
+
+    eleventyConfig.on("eleventy.extensionmap", map => {
+        extensionMap = map;
+    });
 
     // Add support for fsx files
     eleventyConfig.addTemplateFormats("fsx");
@@ -138,7 +146,7 @@ function configFunction(
     // Teach eleventy how to handle fsx files
     eleventyConfig.addExtension(
         "fsx",
-        eleventyFsharpLiterate(nunjucksEngineCache, eleventyConfig, pluginOptions)
+        eleventyFsharpLiterate(nunjucksEngineCache, eleventyConfig, extensionMap)
     );
 }
 

@@ -24,6 +24,7 @@ test("eleventy-fsharp-literate works", async (t) => {
 </code></pre>
 <h1>First-level heading</h1>
 <p>Some more documentation using <code>Markdown</code>.</p>
+
     </body>
 </html>
 `
@@ -49,6 +50,7 @@ test("nunjucks filters are supported from inside the F# file", async (t) => {
     <body>
         <p>Nunjucks filters are support from inside the F# file.</p>
 <p>SOME TEXT</p>
+
     </body>
 </html>
 `

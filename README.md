@@ -69,25 +69,12 @@ let d = 4
 
 Only nunjucks templates are supported for now. Can be revisited to add support for other template engines if there is demand.
 
-Syntax highlighting is using [@fec/eleventy-plugin-remark](https://www.npmjs.com/package/@fec/eleventy-plugin-remark) internally. So you are encourage, to use the same plugin to add syntax highlighting to your markdown files.
-
 ```js
-// Store the remark options in a variable so you garantee
-// that the same options are used for both plugins
-const remarkOptions = {
-    enableRehype: false,
-    plugins: [
-        // ...
-    ],
-};
+const eleventyFsharpLiterate = require("@mangelmaxime/eleventy-plugin-fsharp");
 
 module.exports = function (eleventyConfig) {
-    // Set remark as your default markdown engine
-    eleventyConfig.addPlugin(eleventyRemark, remarkOptions);
     // Add the fsharp plugin
-    eleventyConfig.addPlugin(eleventyFsharpLiterate, {
-        eleventyRemarkOptions: remarkOptions,
-    });
+    eleventyConfig.addPlugin(eleventyFsharpLiterate);
 
     return {
         dir: {

@@ -31,4 +31,8 @@ let moreCode = 54
 And you should see a date: {{ null | now }}
 
 This means that nunjucks compilation is working
+
+```js
+const a = 42;
+```
 *)
