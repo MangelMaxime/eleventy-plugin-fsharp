@@ -34,12 +34,12 @@ module.exports = function (eleventyConfig) {
 An literate F# literate file is a file ending with `.fsx`.
 
 ```fs
-(**
+(***
 ---
 layout: standard
 title: Introduction
 ---
-**)
+***)
 
 (**
 # First-level heading
@@ -58,7 +58,7 @@ let add x y = x + y
 
 The F# script files is processed as follows:
 
-- It starts with a YAML front matter block delimieted by `(**` and `**)`, which is used to set the metadata for the page.
+- It starts with a YAML front matter block delimited by `(***` and `***)`, which is used to set the metadata for the page.
 - A multi-line comment starting with `(**` and ending with `*)` is considered a Markdown block.
 - A single line comment starting with `(***` and ending with `***)` is considered as a command.
 
