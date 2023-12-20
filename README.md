@@ -2,6 +2,33 @@
 
 This plugin add support for F# literate files to Eleventy.
 
+## Installation
+
+**Important**
+
+Only nunjucks templates are supported for now. Can be revisited to add support for other template engines if there is demand.
+
+```js
+const eleventyFsharpLiterate = require("@mangelmaxime/eleventy-plugin-fsharp");
+
+module.exports = function (eleventyConfig) {
+    // Add the fsharp plugin
+    eleventyConfig.addPlugin(eleventyFsharpLiterate);
+
+    return {
+        dir: {
+            input: ".",
+            includes: "_includes",
+            data: "_data",
+            output: "_site",
+        },
+        dataTemplateEngine: "njk",
+        htmlTemplateEngine: "njk",
+        markdownTemplateEngine: "njk",
+    };
+};
+```
+
 ## Syntax
 
 An literate F# literate file is a file ending with `.fsx`.
@@ -61,31 +88,4 @@ This is a markdown block
 
 // This code is shown
 let d = 4
-```
-
-## Limitations
-
-**Important**
-
-Only nunjucks templates are supported for now. Can be revisited to add support for other template engines if there is demand.
-
-```js
-const eleventyFsharpLiterate = require("@mangelmaxime/eleventy-plugin-fsharp");
-
-module.exports = function (eleventyConfig) {
-    // Add the fsharp plugin
-    eleventyConfig.addPlugin(eleventyFsharpLiterate);
-
-    return {
-        dir: {
-            input: ".",
-            includes: "_includes",
-            data: "_data",
-            output: "_site",
-        },
-        dataTemplateEngine: "njk",
-        htmlTemplateEngine: "njk",
-        markdownTemplateEngine: "njk",
-    };
-};
 ```
