@@ -3,6 +3,7 @@
 
 const debug = require("debug")("eleventy-plugin-fsharp-literate");
 const readFileSync = require("./utils/readFileSync");
+const NunjucksLib = require("nunjucks");
 const transformFsxToMarkdown = require("./transformFsxToMarkdown")
 const getData = require("./getData");
 
@@ -71,24 +72,24 @@ function configFunction(
 
     /**
      *
-     * @param {EleventyInputContent} _inputContent The content of the file
+     * @param {EleventyInputContent} inputContent The content of the file
      * @param {string} inputPath The path of the file
      */
     const compile = async (
-        _inputContent,
+        inputContent,
         inputPath
     ) => {
         /**
          * @param {object} data The data object coming from the data cascade (front-matter, global data, etc.)
          */
         return async (data) => {
-            // if (inputContent) {
-            //     // So if str has a value, it's a permalink (which can be a string or a function)
-            //     debug(`Permalink: ${inputContent}`);
-            //     return typeof inputContent === "function"
-            //         ? inputContent(data)
-            //         : NunjucksLib.renderString(inputContent, data);
-            // }
+            if (inputContent) {
+                // So if str has a value, it's a permalink (which can be a string or a function)
+                debug(`Permalink: ${inputContent}`);
+                return typeof inputContent === "function"
+                    ? inputContent(data)
+                    : NunjucksLib.renderString(inputContent, data);
+            }
 
             debug(`Reading ${inputPath}`);
             const { content } = readFileSync(inputPath);
