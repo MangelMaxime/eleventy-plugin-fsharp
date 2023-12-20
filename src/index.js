@@ -6,69 +6,13 @@ const readFileSync = require("./utils/readFileSync");
 const NunjucksLib = require("nunjucks");
 const transformFsxToMarkdown = require("./transformFsxToMarkdown")
 const getData = require("./getData");
+const { EleventyRenderPlugin } = require("@11ty/eleventy");
 
 /**
  * @typedef {string | undefined | function(object):object} EleventyInputContent
  */
 
-const TemplateRender = require("@11ty/eleventy/src/TemplateRender");
-
-async function compileMarkdown(
-    content,
-    { templateConfig, extensionMap }
-) {
-    let inputDir = templateConfig?.dir?.input;
-
-    let tr = new TemplateRender("md", inputDir, templateConfig);
-    tr.extensionMap = extensionMap;
-    tr.setEngineOverride("md");
-
-    return tr.getCompiledTemplate(content);
-}
-
-async function compileNunjucks(
-    content,
-    { templateConfig, extensionMap }
-) {
-    let inputDir = templateConfig?.dir?.input;
-
-    let tr = new TemplateRender("njk", inputDir, templateConfig);
-    tr.extensionMap = extensionMap;
-    tr.setEngineOverride("njk");
-
-    return tr.getCompiledTemplate(content);
-}
-
-/**
- * @param {import('@11ty/eleventy/src/UserConfig'} eleventyConfig
- */
-function configFunction(
-    eleventyConfig
-) {
-    // Cache for the nunjucks engine,
-    // this avoid to create a new instance of the nunjucks engine for each file
-    // let nunjucksEngineCache = null;
-    let extensionMap;
-    eleventyConfig.on("eleventy.extensionmap", map => {
-        extensionMap = map;
-    });
-
-    let templateConfig;
-    eleventyConfig.on("eleventy.config", (cfg) => {
-        templateConfig = cfg;
-    });
-
-    // Add support for fsx files
-    eleventyConfig.addTemplateFormats("fsx");
-
-    // For some reason, we need to define the compile function inside of
-    // the config option. Otherwise, the templateConfig and extensionMap
-    // variables are undefined.
-    // IHMO, they should not be undefined because they should hold
-    // a reference to their original declaration and have the updated value
-    // forwared.
-    // NOTE: This bug only happens when consuming the plugin as an NPM package
-    // Local testing and local package installation was fine... ¯\_(ツ)_/¯
+function eleventyFsharp(eleventyConfig) {
 
     /**
      *
@@ -79,6 +23,7 @@ function configFunction(
         inputContent,
         inputPath
     ) => {
+
         /**
          * @param {object} data The data object coming from the data cascade (front-matter, global data, etc.)
          */
@@ -101,34 +46,49 @@ function configFunction(
 
                 debug(`Markdown content:\n ${markdownContent}`);
 
-                const compileMarkdownFn = await compileMarkdown(markdownContent, {
-                    templateConfig: templateConfig,
-                    extensionMap,
-                })
-                const markdownText = await compileMarkdownFn(data);
+                // const compileMarkdownFn = await compileMarkdown(markdownContent, {
+                //     templateConfig: templateConfig,
+                //     extensionMap,
+                // })
+                const markdownText = await eleventyConfig.getFilter("renderTemplate")(markdownContent, "md");
 
                 // Replace &quot; with " because some markdown renderers escape the quotes
                 // and it breaks the nunjucks compilation
                 const fixedMarkdownText = markdownText.replace(/&quot;/g, '"');
 
-                const compileNunjucksFn = await compileNunjucks(fixedMarkdownText, {
-                    templateConfig: templateConfig,
-                    extensionMap,
-                })
-
-                return await compileNunjucksFn(data);
+                return await eleventyConfig.getFilter("renderTemplate")(fixedMarkdownText, "njk");
             }
         };
     };
 
+    return {
+        read: false,
+        getData,
+        compile,
+    }
+}
+
+/**
+ * @param {import('@11ty/eleventy/src/UserConfig'} eleventyConfig
+ */
+function configFunction(
+    eleventyConfig
+) {
+
+    eleventyConfig.addPlugin(EleventyRenderPlugin);
+
+    // Add support for fsx files
+    eleventyConfig.addTemplateFormats("fsx");
+
     // Teach eleventy how to handle fsx files
     eleventyConfig.addExtension(
         "fsx",
-        {
-            read: false,
-            getData,
-            compile,
-        }
+        eleventyFsharp(eleventyConfig)
+    );
+
+    eleventyConfig.addExtension(
+        "fs",
+        eleventyFsharp(eleventyConfig)
     );
 }
 

@@ -31,7 +31,7 @@ module.exports = function (eleventyConfig) {
 
 ## Syntax
 
-An literate F# literate file is a file ending with `.fsx`.
+An literate F# literate file is a file ending with `.fsx` or `.fs`
 
 ```fs
 (***

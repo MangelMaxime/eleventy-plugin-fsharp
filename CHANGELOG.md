@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.4.0 - 2023-12-20
+
+### Added
+
+* Add support for `.fs` files.
+
+### Changed
+
+* Use `EleventyRenderPlugin` instead of a custom rendering implementation.
+
 ## 1.3.0 - 2023-12-20
 
 ### Fixed
