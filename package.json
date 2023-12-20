@@ -1,7 +1,7 @@
 {
     "name": "@mangelmaxime/eleventy-plugin-fsharp",
     "private": false,
-    "version": "1.0.1",
+    "version": "1.2.0",
     "description": "",
     "main": "src/index.js",
     "scripts": {

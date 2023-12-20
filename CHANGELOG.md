@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.2.0 - 2023-12-20
+
+### Fixed
+
+* Declare the `compile` function inside of the `configFunction` otherwise, when consuming the package as a dependency some of the updated variable were not updated. ¯\_(ツ)_/¯
+
+## 1.1.0 - 2023-12-20
+
+### Changed
+
+* Don't instantiate our owm `NunjucksEngine` but instead use the instance from Eleventy.
+
 ## 1.0.1 - 2023-12-20
 
 ### Fixed
