@@ -8,7 +8,7 @@
  * @param {(value: T) => boolean} predicate A function that evaluates an element of the array to a boolean value
  * @returns {T []} The rest of the array
  */
-module.exports = function skipUntil(
+export default function skipUntil(
     array,
     predicate
 ) {

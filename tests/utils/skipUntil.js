@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
-const test = require('ava');
-const skipUntil = require("../../src/utils/skipUntil")
+import test from "ava";
+import skipUntil from "../../src/utils/skipUntil.js";
 
 test('Return all the elements if predicate is always true', t => {
 	const source = [1, 2, 3, 4, 5];

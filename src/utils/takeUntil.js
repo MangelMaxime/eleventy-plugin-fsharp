@@ -8,7 +8,7 @@
  * @param {(value: T) => boolean} predicate A function that evaluates an element of the array to a boolean value
  * @returns The rest of the array
  */
-module.exports = function takeUntil(
+export default function takeUntil(
     source,
     predicate
 ) {

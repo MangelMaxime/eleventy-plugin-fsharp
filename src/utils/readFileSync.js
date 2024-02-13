@@ -1,5 +1,5 @@
-const fs = require("fs");
-const matter = require("gray-matter");
+import fs from "fs";
+import matter from "gray-matter";
 
 /**
  * Reads a file synchronously and returns the front-matter result
@@ -13,4 +13,4 @@ const readFileSync = (inputPath) => {
     });
 };
 
-module.exports = readFileSync;
+export default readFileSync;

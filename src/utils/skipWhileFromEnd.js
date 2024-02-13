@@ -8,7 +8,7 @@
  * @param {(value: T) => boolean} predicate A function that evaluates an element of the array to a boolean value
  * @returns The elements that match the predicate
  */
-module.exports = function skipWhileFromEnd(
+export default function skipWhileFromEnd(
     source,
     predicate
 ) {

@@ -1,6 +1,7 @@
 {
     "name": "@mangelmaxime/eleventy-plugin-fsharp",
     "private": false,
+    "type": "module",
     "version": "1.4.0",
     "description": "",
     "main": "src/index.js",
@@ -15,13 +16,14 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "gray-matter": "^4.0.3"
+        "gray-matter": "^4.0.3",
+        "nunjucks": "^3.2.4"
     },
     "devDependencies": {
-        "@11ty/eleventy": "2.0.1",
+        "@11ty/eleventy": "3.0.0-alpha.5",
         "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
         "@types/node": "^20.10.5",
-        "ava": "^6.0.1",
+        "ava": "^6.1.1",
         "chalk": "^5.3.0",
         "changelog-parser": "^3.0.1",
         "debug": "^4.3.4",
@@ -29,6 +31,6 @@
         "shx": "^0.3.4"
     },
     "peerDependencies": {
-        "@11ty/eleventy": "^1.0.0"
+        "@11ty/eleventy": "^3.0.0"
     }
 }

@@ -1,4 +1,4 @@
-const readFileSync = require("./utils/readFileSync");
+import readFileSync from "./utils/readFileSync.js";
 
 /**
  * Gets front-matter data from the file synchronously
@@ -14,4 +14,4 @@ const readFileSync = require("./utils/readFileSync");
     };
 };
 
-module.exports = getData;
+export default getData;

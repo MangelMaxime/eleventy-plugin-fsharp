@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
-const test = require('ava');
-const Eleventy = require("@11ty/eleventy");
+import test from "ava";
+import Eleventy from "@11ty/eleventy";
 
 test("eleventy-fsharp-literate works", async (t) => {
 

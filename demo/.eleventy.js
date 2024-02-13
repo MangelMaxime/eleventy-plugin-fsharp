@@ -1,15 +1,9 @@
-const fsharpPlugin = require("../src/index.js");
-const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-const loadLanguages = require("prismjs/components/");
+// import fsharpPlugin from "../src/index.js";
+// import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 
-loadLanguages("fsharp");
+// console.log(fsharpPlugin)
 
-/**
- * @typedef {import('@11ty/eleventy/src/UserConfig')} EleventyConfig
- * @typedef {ReturnType<import('@11ty/eleventy/src/defaultConfig')>} EleventyReturnValue
- * @type {(eleventyConfig: EleventyConfig) => EleventyReturnValue}
- */
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
 
     // Add a nunjucks filter to check that it can be accessed from the .fsx file
     eleventyConfig.addNunjucksFilter(
@@ -21,13 +15,13 @@ module.exports = function (eleventyConfig) {
         );
 
     // Set up the syntax highlighter
-    eleventyConfig.addPlugin(syntaxHighlight, {
-        init: function ({ Prism }) {
-            Prism.languages.fs = Prism.languages.fsharp;
-        }
-    });
+    // eleventyConfig.addPlugin(syntaxHighlight, {
+    //     // init: function ({ Prism }) {
+    //     //     // Prism.languages.fs = Prism.languages.fsharp;
+    //     // }
+    // });
 
-    eleventyConfig.addPlugin(fsharpPlugin);
+    // eleventyConfig.addPlugin(fsharpPlugin);
 
     return {
         dir: {

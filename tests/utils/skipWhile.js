@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
-const test = require('ava');
-const skipWhile = require("../../src/utils/skipWhile")
+import test from "ava";
+import skipWhile from "../../src/utils/skipWhile.js";
 
 test('Return an empty if predicate is always true', t => {
 	const source = [1, 2, 3, 4, 5];

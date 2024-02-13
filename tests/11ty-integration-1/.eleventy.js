@@ -1,11 +1,11 @@
-const fsharpPlugin = require("../../src/index.js");
+import fsharpPlugin from "../../src/index.js";
 
 /**
  * @typedef {import('@11ty/eleventy/src/UserConfig')} EleventyConfig
  * @typedef {ReturnType<import('@11ty/eleventy/src/defaultConfig')>} EleventyReturnValue
  * @type {(eleventyConfig: EleventyConfig) => EleventyReturnValue}
  */
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
     eleventyConfig.addPlugin(fsharpPlugin);
 
     return {

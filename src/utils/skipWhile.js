@@ -8,7 +8,7 @@
  * @param {(value: T) => boolean} predicate A function that evaluates an element of the array to a boolean value
  * @returns A new array with the elements that match the predicate removed from the beginning
  */
-module.exports = function skipWhile(
+export default function skipWhile(
     source,
     predicate
 ) {

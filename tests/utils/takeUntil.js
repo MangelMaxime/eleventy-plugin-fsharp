@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
-const test = require('ava');
-const takeUntil = require("../../src/utils/takeUntil")
+import test from "ava";
+import takeUntil from "../../src/utils/takeUntil.js";
 
 test('Return all elements if predicate is always true', t => {
     const source = [1, 2, 3, 4, 5];

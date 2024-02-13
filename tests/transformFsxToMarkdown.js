@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
- const test = require('ava');
- const transformFsxToMarkdown = require("../src/transformFsxToMarkdown")
+import test from "ava";
+import transformFsxToMarkdown from "../src/transformFsxToMarkdown.js";
 
 test("removes empty lines at the beginning", (t) => {
     const input = `

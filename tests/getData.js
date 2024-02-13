@@ -1,8 +1,8 @@
 /**
  * @type {import("ava").TestFn<T>}
  */
-const test = require('ava');
-const getData = require("../src/getData")
+import test from "ava";
+import getData from "../src/getData.js";
 
 test("getData works with F# literate style of front matter", (t) => {
     const data = getData("tests/fixtures/getData.fsx");

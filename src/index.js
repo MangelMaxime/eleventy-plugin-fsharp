@@ -1,12 +1,15 @@
 // Code from this file has been based on
 // https://github.com/saneef/eleventy-plugin-asciidoc/blob/da3ba916808fdb87e97f25c4451f3a78f55a5769/lib/eleventy-asciidoc.js
 
-const debug = require("debug")("eleventy-plugin-fsharp-literate");
-const readFileSync = require("./utils/readFileSync");
-const NunjucksLib = require("nunjucks");
-const transformFsxToMarkdown = require("./transformFsxToMarkdown")
-const getData = require("./getData");
-const { EleventyRenderPlugin } = require("@11ty/eleventy");
+
+import debugUtil from "debug";
+const debug = debugUtil("eleventy-plugin-fsharp-literate");
+
+import readFileSync from "./utils/readFileSync.js";
+import NunjucksLib from "nunjucks";
+import transformFsxToMarkdown from "./transformFsxToMarkdown.js";
+import getData from "./getData.js";
+import { EleventyRenderPlugin } from "@11ty/eleventy";
 
 /**
  * @typedef {string | undefined | function(object):object} EleventyInputContent
@@ -46,10 +49,6 @@ function eleventyFsharp(eleventyConfig) {
 
                 debug(`Markdown content:\n ${markdownContent}`);
 
-                // const compileMarkdownFn = await compileMarkdown(markdownContent, {
-                //     templateConfig: templateConfig,
-                //     extensionMap,
-                // })
                 const markdownText = await eleventyConfig.getFilter("renderTemplate")(markdownContent, "md");
 
                 // Replace &quot; with " because some markdown renderers escape the quotes
@@ -69,7 +68,7 @@ function eleventyFsharp(eleventyConfig) {
 }
 
 /**
- * @param {import('@11ty/eleventy/src/UserConfig'} eleventyConfig
+ * @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig
  */
 function configFunction(
     eleventyConfig
@@ -92,7 +91,7 @@ function configFunction(
     );
 }
 
-module.exports = {
+export default {
     initArguments: {},
     configFunction: configFunction,
-};
+}

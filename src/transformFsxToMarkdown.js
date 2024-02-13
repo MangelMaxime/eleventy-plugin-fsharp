@@ -1,8 +1,9 @@
-const debug = require("debug")("eleventy-plugin-fsharp-literate");
-const skipUntil = require("./utils/skipUntil");
-const skipWhile = require("./utils/skipWhile");
-const skipWhileFromEnd = require("./utils/skipWhileFromEnd");
-const takeUntil = require("./utils/takeUntil");
+import debugUtil from "debug";
+const debug = debugUtil("eleventy-plugin-fsharp-literate");
+import skipUntil from "./utils/skipUntil.js";
+import skipWhile from "./utils/skipWhile.js";
+import skipWhileFromEnd from "./utils/skipWhileFromEnd.js";
+import takeUntil from "./utils/takeUntil.js";
 
 /** @type {RegExp} */
 const startMarkdownCommentRegex = /\(\*(\*)+\s*/;
@@ -133,4 +134,4 @@ const transformFsxToMarkdown = (fileContent) => {
     return processFile([], sanetizedLines);
 };
 
-module.exports = transformFsxToMarkdown;
+export default transformFsxToMarkdown;
